@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jake Hockey | Investigative Journalism</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f0f0f;
+            --secondary: #1a1a1a;
+            --accent: #dc2626;
+            --accent-light: #ef4444;
+            --text: #fafafa;
+            --text-muted: #737373;
+            --border: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Subtle grain texture */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Minimalist cards */
+        .minimal-card {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .minimal-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(220, 38, 38, 0.1);
+        }
+
+        /* Red accent line */
+        .accent-line {
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .group:hover .accent-line {
+            width: 60px;
+        }
+
+        /* Smooth underline animation */
+        .hover-underline {
+            position: relative;
+        }
+
+        .hover-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .hover-underline:hover::after {
+            width: 100%;
+        }
+
+        /* Custom range */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            margin-top: -6px;
+            transition: transform 0.2s;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        /* Toggle switch */
+        .toggle {
+            width: 48px;
+            height: 24px;
+            background: var(--border);
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle.active {
+            background: var(--accent);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+
+        .toggle.active::after {
+            transform: translateX(24px);
+        }
+
+        /* Fade in animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Stagger children */
+        .stagger-children > * {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Recording indicator */
+        .rec-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Minimal button */
+        .btn-minimal {
+            background: transparent;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .btn-minimal:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            border: 1px solid var(--accent);
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-1px);
+        }
+
+        /* Clean scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #404040;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="grain"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-[#0f0f0f]/90 backdrop-blur-md border-b border-[#262626]">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-[#dc2626] rounded-sm flex items-center justify-center">
+                    <span class="font-display font-bold text-white text-sm">JH</span>
+                </div>
+                <span class="font-display font-medium tracking-tight">Jake Hockey</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm text-[#737373]">
+                <a href="#" class="hover:text-white transition-colors hover-underline">Investigations</a>
+                <a href="#" class="hover:text-white transition-colors hover-underline">Impact</a>
+                <a href="#" class="hover:text-white transition-colors hover-underline">About</a>
+                <button class="btn-minimal px-5 py-2 rounded-sm text-sm">Sign In</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="pt-32 pb-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="max-w-3xl fade-in">
+                <div class="flex items-center gap-2 mb-6 text-[#737373] text-xs tracking-widest uppercase font-medium">
+                    <span class="rec-dot"></span>
+                    <span>Independent Investigative Journalism</span>
+                </div>
+                
+                <h1 class="font-display text-5xl md:text-7xl font-medium leading-[1.1] mb-6 tracking-tight">
+                    Exposing truth.<br>
+                    <span class="text-[#dc2626]">Protecting communities.</span>
+                </h1>
+                
+                <p class="text-lg text-[#737373] mb-10 max-w-xl leading-relaxed">
+                    Join a network of supporters funding independent investigations that hold predators accountable and keep families safe.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <button class="btn-primary px-8 py-4 rounded-sm font-medium text-sm tracking-wide">
+                        Support the Work
+                    </button>
+                    <button class="btn-minimal px-8 py-4 rounded-sm font-medium text-sm tracking-wide flex items-center gap-2">
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                        Watch Reel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-[#262626] stagger-children">
+                <div>
+                    <div class="font-display text-3xl font-medium mb-1">147</div>
+                    <div class="text-xs text-[#737373] uppercase tracking-wider">Investigations</div>
+                </div>
+                <div>
+                    <div class="font-display text-3xl font-medium mb-1 text-[#dc2626]">89</div>
+                    <div class="text-xs text-[#737373] uppercase tracking-wider">Predators Exposed</div>
+                </div>
+                <div>
+                    <div class="font-display text-3xl font-medium mb-1">2.4k</div>
+                    <div class="text-xs text-[#737373] uppercase tracking-wider">Supporters</div>
+                </div>
+                <div>
+                    <div class="font-display text-3xl font-medium mb-1">4.2M</div>
+                    <div class="text-xs text-[#737373] uppercase tracking-wider">Views Generated</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Tiers -->
+    <section class="py-20 px-6 bg-[#0a0a0a]">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 fade-in">
+                <div>
+                    <span class="text-xs text-[#737373] uppercase tracking-widest mb-2 block">Membership</span>
+                    <h2 class="font-display text-3xl md:text-4xl font-medium">Choose your level of access</h2>
+                </div>
+                
+                <div class="flex items-center gap-3 text-sm">
+                    <span class="text-[#737373]" id="monthly-label">Monthly</span>
+                    <div class="toggle" id="billing-toggle"></div>
+                    <span class="text-[#737373]" id="yearly-label">Yearly <span class="text-[#dc2626] text-xs">(-20%)</span></span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-children">
+                
+                <!-- Tier 1 -->
+                <div class="minimal-card rounded-sm p-8 group">
+                    <div class="accent-line mb-6"></div>
+                    <h3 class="font-display text-xl font-medium mb-2">Access</h3>
+                    <div class="flex items-baseline gap-1 mb-6">
+                        <span class="font-display text-4xl font-medium price-amount" data-monthly="5" data-yearly="48">$5</span>
+                        <span class="text-[#737373] text-sm billing-period">/month</span>
+                    </div>
+                    
+                    <ul class="space-y-3 mb-8 text-sm text-[#a3a3a3]">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Exclusive case updates</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Community Discord</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Monthly Q&A sessions</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full btn-minimal py-3 rounded-sm text-sm font-medium tracking-wide">
+                        Select Access
+                    </button>
+                </div>
+
+                <!-- Tier 2 -->
+                <div class="minimal-card rounded-sm p-8 group relative border-[#dc2626]/30">
+                    <div class="absolute top-0 right-0 bg-[#dc2626] text-white text-[10px] font-bold px-3 py-1 uppercase tracking-wider">
+                        Popular
+                    </div>
+                    <div class="accent-line mb-6 bg-[#dc2626]"></div>
+                    <h3 class="font-display text-xl font-medium mb-2">Insider</h3>
+                    <div class="flex items-baseline gap-1 mb-6">
+                        <span class="font-display text-4xl font-medium text-[#dc2626] price-amount" data-monthly="15" data-yearly="144">$15</span>
+                        <span class="text-[#737373] text-sm billing-period">/month</span>
+                    </div>
+                    
+                    <ul class="space-y-3 mb-8 text-sm text-[#a3a3a3]">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Everything in Access</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Raw investigation footage</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Direct message access</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Early video releases</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full btn-primary py-3 rounded-sm text-sm font-medium tracking-wide text-white">
+                        Become an Insider
+                    </button>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="minimal-card rounded-sm p-8 group">
+                    <div class="accent-line mb-6"></div>
+                    <h3 class="font-display text-xl font-medium mb-2">Partner</h3>
+                    <div class="flex items-baseline gap-1 mb-6">
+                        <span class="font-display text-4xl font-medium price-amount" data-monthly="50" data-yearly="480">$50</span>
+                        <span class="text-[#737373] text-sm billing-period">/month</span>
+                    </div>
+                    
+                    <ul class="space-y-3 mb-8 text-sm text-[#a3a3a3]">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Everything in Insider</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Monthly video calls</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Case input & voting</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
+                            <span>Merchandise & gear</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full btn-minimal py-3 rounded-sm text-sm font-medium tracking-wide">
+                        Become a Partner
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Support -->
+    <section class="py-20 px-6">
+        <div class="max-w-2xl mx-auto text-center fade-in">
+            <span class="text-xs text-[#737373] uppercase tracking-widest mb-2 block">Direct Support</span>
+            <h2 class="font-display text-3xl font-medium mb-4">Make a one-time contribution</h2>
+            <p class="text-[#737373] mb-10">Fund specific investigations or equipment needs</p>
+
+            <div class="minimal-card rounded-sm p-8 text-left">
+                <div class="flex gap-4 mb-8">
+                    <button class="flex-1 py-3 rounded-sm border border-[#262626] hover:border-[#dc2626] transition-colors text-sm font-medium active" id="one-time-btn">
+                        One-time
+                    </button>
+                    <button class="flex-1 py-3 rounded-sm border border-[#262626] hover:border-[#dc2626] transition-colors text-sm font-medium text-[#737373]" id="monthly-btn">
+                        Monthly
+                    </button>
+                </div>
+
+                <div class="relative mb-6">
+                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#737373] font-display text-lg">$</span>
+                    <input type="number" id="custom-amount" placeholder="Amount" 
+                        class="w-full bg-transparent border border-[#262626] rounded-sm py-4 pl-10 pr-4 font-display text-2xl focus:outline-none focus:border-[#dc2626] transition-colors placeholder:text-[#404040]">
+                </div>
+
+                <input type="range" min="5" max="500" value="25" class="w-full mb-2" id="amount-slider">
+
+                <div class="flex justify-between text-xs text-[#525252] mb-8">
+                    <span>$5</span>
+                    <span>$250</span>
+                    <span>$500+</span>
+                </div>
+
+                <button class="w-full btn-primary py-4 rounded-sm font-medium tracking-wide text-white">
+                    Contribute Now
+                </button>
+
+                <p class="text-xs text-[#525252] mt-4 text-center">Secure payment processing. Cancel anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-20 px-6 bg-[#0a0a0a]">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <span class="text-xs text-[#737373] uppercase tracking-widest mb-2 block">What You Get</span>
+                <h2 class="font-display text-3xl font-medium">Membership Benefits</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-[#262626] stagger-children">
+                <div class="bg-[#0f0f0f] p-8 group hover:bg-[#1a1a1a] transition-colors">
+                    <i data-lucide="video" class="w-6 h-6 text-[#dc2626] mb-4"></i>
+                    <h3 class="font-medium mb-2">Exclusive Content</h3>
+                    <p class="text-sm text-[#737373]">Unedited footage and case files not available publicly</p>
+                </div>
+                <div class="bg-[#0f0f0f] p-8 group hover:bg-[#1a1a1a] transition-colors">
+                    <i data-lucide="message-circle" class="w-6 h-6 text-[#dc2626] mb-4"></i>
+                    <h3 class="font-medium mb-2">Direct Access</h3>
+                    <p class="text-sm text-[#737373]">Private Discord and messaging with Jake</p>
+                </div>
+                <div class="bg-[#0f0f0f] p-8 group hover:bg-[#1a1a1a] transition-colors">
+                    <i data-lucide="eye" class="w-6 h-6 text-[#dc2626] mb-4"></i>
+                    <h3 class="font-medium mb-2">Early Access</h3>
+                    <p class="text-sm text-[#737373]">Watch investigations before public release</p>
+                </div>
+                <div class="bg-[#0f0f0f] p-8 group hover:bg-[#1a1a1a] transition-colors">
+                    <i data-lucide="shield" class="w-6 h-6 text-[#dc2626] mb-4"></i>
+                    <h3 class="font-medium mb-2">Impact</h3>
+                    <p class="text-sm text-[#737373]">Fund real investigations that protect communities</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto fade-in">
+            <div class="text-center mb-12">
+                <span class="text-xs text-[#737373] uppercase tracking-widest mb-2 block">Community</span>
+                <h2 class="font-display text-3xl font-medium">What supporters say</h2>
+            </div>
+
+            <div class="space-y-6">
+                <div class="minimal-card rounded-sm p-8 md:flex gap-6 items-start">
+                    <div class="w-12 h-12 rounded-full bg-[#262626] flex items-center justify-center font-display font-bold text-[#dc2626] shrink-0 mb-4 md:mb-0">S</div>
+                    <div>
+                        <p class="text-lg mb-4 leading-relaxed">"The raw footage access gives you a completely different perspective on the work involved. It's intense, real, and important."</p>
+                        <div class="flex items-center gap-2 text-sm text-[#737373]">
+                            <span class="text-white font-medium">Sarah M.</span>
+                            <span>•</span>
+                            <span>Insider member for 8 months</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="minimal-card rounded-sm p-8 md:flex gap-6 items-start">
+                    <div class="w-12 h-12 rounded-full bg-[#262626] flex items-center justify-center font-display font-bold text-[#dc2626] shrink-0 mb-4 md:mb-0">M</div>
+                    <div>
+                        <p class="text-lg mb-4 leading-relaxed">"Being able to vote on which cases get priority makes me feel like I'm actually part of the solution, not just a viewer."</p>
+                        <div class="flex items-center gap-2 text-sm text-[#737373]">
+                            <span class="text-white font-medium">Mike R.</span>
+                            <span>•</span>
+                            <span>Partner member</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 px-6 bg-[#0a0a0a]">
+        <div class="max-w-2xl mx-auto fade-in">
+            <div class="text-center mb-12">
+                <span class="text-xs text-[#737373] uppercase tracking-widest mb-2 block">FAQ</span>
+                <h2 class="font-display text-3xl font-medium">Common questions</h2>
+            </div>
+
+            <div class="space-y-4">
+                <div class="minimal-card rounded-sm overflow-hidden">
+                    <button class="w-full px-6 py-5 text-left flex justify-between items-center faq-toggle group">
+                        <span class="font-medium group-hover:text-[#dc2626] transition-colors">Can I cancel my membership?</span>
+                        <i data-lucide="plus" class="w-4 h-4 text-[#737373] faq-icon transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-5 text-[#737373] text-sm hidden faq-content">
+                        Yes, you can cancel anytime. You'll continue to have access until the end of your current billing period.
+                    </div>
+                </div>
+
+                <div class="minimal-card rounded-sm overflow-hidden">
+                    <button class="w-full px-6 py-5 text-left flex justify-between items-center faq-toggle group">
+                        <span class="font-medium group-hover:text-[#dc2626] transition-colors">How do I access the Discord?</span>
+                        <i data-lucide="plus" class="w-4 h-4 text-[#737373] faq-icon transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-5 text-[#737373] text-sm hidden faq-content">
+                        After joining, you'll receive an email with your exclusive invite link and authentication details.
+                    </div>
+                </div>
+
+                <div class="minimal-card rounded-sm overflow-hidden">
+                    <button class="w-full px-6 py-5 text-left flex justify-between items-center faq-toggle group">
+                        <span class="font-medium group-hover:text-[#dc2626] transition-colors">Is my payment information secure?</span>
+                        <i data-lucide="plus" class="w-4 h-4 text-[#737373] faq-icon transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-5 text-[#737373] text-sm hidden faq-content">
+                        Absolutely. We use industry-standard encryption and never store your full payment details on our servers.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#262626] py-12 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-6 h-6 bg-[#dc2626] rounded-sm flex items-center justify-center">
+                    <span class="font-display font-bold text-white text-xs">JH</span>
+                </div>
+                <span class="font-display font-medium text-sm">Jake Hockey</span>
+            </div>
+            
+            <div class="flex gap-6 text-sm text-[#737373]">
+                <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms</a>
+                <a href="#" class="hover:text-white transition-colors">Contact</a>
+            </div>
+
+            <div class="text-xs text-[#525252]">
+                © 2026 All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // GSAP Animations
+        gsap.to(".fade-in", {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            stagger: 0.2
+        });
+
+        gsap.to(".stagger-children > *", {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            stagger: 0.1,
+            delay: 0.3
+        });
+
+        // Billing Toggle
+        const toggle = document.getElementById('billing-toggle');
+        const monthlyLabel = document.getElementById('monthly-label');
+        const yearlyLabel = document.getElementById('yearly-label');
+        const priceAmounts = document.querySelectorAll('.price-amount');
+        const billingPeriods = document.querySelectorAll('.billing-period');
+
+        toggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const isYearly = this.classList.contains('active');
+            
+            monthlyLabel.classList.toggle('text-white', !isYearly);
+            monthlyLabel.classList.toggle('text-[#737373]', isYearly);
+            yearlyLabel.classList.toggle('text-white', isYearly);
+            yearlyLabel.classList.toggle('text-[#737373]', !isYearly);
+
+            priceAmounts.forEach(price => {
+                const amount = isYearly ? price.dataset.yearly : price.dataset.monthly;
+                price.textContent = '$' + amount;
+            });
+
+            billingPeriods.forEach(period => {
+                period.textContent = isYearly ? '/year' : '/month';
+            });
+        });
+
+        // Custom Amount
+        const slider = document.getElementById('amount-slider');
+        const customInput = document.getElementById('custom-amount');
+        
+        slider.addEventListener('input', function() {
+            customInput.value = this.value;
+        });
+
+        customInput.addEventListener('input', function() {
+            slider.value = this.value;
+        });
+
+        // One-time vs Monthly toggle
+        const oneTimeBtn = document.getElementById('one-time-btn');
+        const monthlyBtn = document.getElementById('monthly-btn');
+
+        oneTimeBtn.addEventListener('click', function() {
+            this.classList.add('text-white', 'border-[#dc2626]');
+            this.classList.remove('text-[#737373]');
+            monthlyBtn.classList.remove('text-white', 'border-[#dc2626]');
+            monthlyBtn.classList.add('text-[#737373]');
+        });
+
+        monthlyBtn.addEventListener('click', function() {
+            this.classList.add('text-white', 'border-[#dc2626]');
+            this.classList.remove('text-[#737373]');
+            oneTimeBtn.classList.remove('text-white', 'border-[#dc2626]');
+            oneTimeBtn.classList.add('text-[#737373]');
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('.faq-icon');
+                
+                content.classList.toggle('hidden');
+                icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(45deg)';
+            });
+        });
+    </script>
+</body>
+</html>
