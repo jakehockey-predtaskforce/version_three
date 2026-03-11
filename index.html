@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jake Hockey | Investigative Journalism</title>
+    <title>Jake Hockey | Predator Task Force | Investigative Journalism</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -205,6 +205,15 @@
             transform: translateY(-1px);
         }
 
+        /* Social link hover */
+        .social-link {
+            transition: all 0.3s ease;
+        }
+        .social-link:hover {
+            transform: translateY(-2px);
+            color: var(--accent);
+        }
+
         /* Clean scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -233,15 +242,18 @@
         <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-[#dc2626] rounded-sm flex items-center justify-center">
-                    <span class="font-display font-bold text-white text-sm">JH</span>
+                    <span class="font-display font-bold text-white text-sm">PTF</span>
                 </div>
-                <span class="font-display font-medium tracking-tight">Jake Hockey</span>
+                <div>
+                    <span class="font-display font-medium tracking-tight block">Jake Hockey</span>
+                    <span class="text-[10px] text-[#737373] uppercase tracking-wider">Texas // San Antonio/Austin</span>
+                </div>
             </div>
             
             <div class="hidden md:flex items-center gap-8 text-sm text-[#737373]">
-                <a href="#" class="hover:text-white transition-colors hover-underline">Investigations</a>
-                <a href="#" class="hover:text-white transition-colors hover-underline">Impact</a>
-                <a href="#" class="hover:text-white transition-colors hover-underline">About</a>
+                <a href="#investigations" class="hover:text-white transition-colors hover-underline">Investigations</a>
+                <a href="#impact" class="hover:text-white transition-colors hover-underline">Impact</a>
+                <a href="#about" class="hover:text-white transition-colors hover-underline">About</a>
                 <button class="btn-minimal px-5 py-2 rounded-sm text-sm">Sign In</button>
             </div>
         </div>
@@ -253,25 +265,58 @@
             <div class="max-w-3xl fade-in">
                 <div class="flex items-center gap-2 mb-6 text-[#737373] text-xs tracking-widest uppercase font-medium">
                     <span class="rec-dot"></span>
-                    <span>Independent Investigative Journalism</span>
+                    <span>Predator Task Force // Cinematic Documentary Series</span>
                 </div>
                 
                 <h1 class="font-display text-5xl md:text-7xl font-medium leading-[1.1] mb-6 tracking-tight">
-                    Exposing truth.<br>
-                    <span class="text-[#dc2626]">Protecting communities.</span>
+                    Exposing predators.<br>
+                    <span class="text-[#dc2626]">Protecting Texas communities.</span>
                 </h1>
                 
-                <p class="text-lg text-[#737373] mb-10 max-w-xl leading-relaxed">
-                    Join a network of supporters funding independent investigations that hold predators accountable and keep families safe.
+                <p class="text-lg text-[#737373] mb-6 max-w-xl leading-relaxed">
+                    Professional, cinematic predator catching operations. "The Catch", "The Call", "The Evidence", "The Aftermath" — 
+                    a documentary format that holds predators accountable and keeps families safe.
                 </p>
 
+                <!-- Social Links -->
+                <div class="flex flex-wrap gap-4 mb-10">
+                    <a href="https://www.youtube.com/@PredTaskForce" target="_blank" class="social-link minimal-card px-4 py-3 rounded-sm flex items-center gap-3">
+                        <svg class="w-5 h-5 text-[#dc2626]" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        <div>
+                            <div class="font-display font-medium text-sm">@PredTaskForce</div>
+                            <div class="text-[10px] text-[#737373] uppercase tracking-wider">360K Subscribers</div>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/predtaskforce" target="_blank" class="social-link minimal-card px-4 py-3 rounded-sm flex items-center gap-3">
+                        <svg class="w-5 h-5 text-[#dc2626]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                        <div>
+                            <div class="font-display font-medium text-sm">@predtaskforce</div>
+                            <div class="text-[10px] text-[#737373] uppercase tracking-wider">Instagram Highlights</div>
+                        </div>
+                    </a>
+                    <a href="https://x.com/predtaskforce" target="_blank" class="social-link minimal-card px-4 py-3 rounded-sm flex items-center gap-3">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        <div>
+                            <div class="font-display font-medium text-sm">@predtaskforce</div>
+                            <div class="text-[10px] text-[#737373] uppercase tracking-wider">Community Updates</div>
+                        </div>
+                    </a>
+                    <a href="https://linktr.ee/predtaskforce" target="_blank" class="social-link minimal-card px-4 py-3 rounded-sm flex items-center gap-3 border-[#dc2626]/30">
+                        <i data-lucide="link" class="w-5 h-5 text-[#dc2626]"></i>
+                        <div>
+                            <div class="font-display font-medium text-sm">Case Files</div>
+                            <div class="text-[10px] text-[#737373] uppercase tracking-wider">Linktree Evidence</div>
+                        </div>
+                    </a>
+                </div>
+
                 <div class="flex flex-wrap gap-4">
-                    <button class="btn-primary px-8 py-4 rounded-sm font-medium text-sm tracking-wide">
-                        Support the Work
+                    <button class="btn-primary px-8 py-4 rounded-sm font-medium text-sm tracking-wide text-white">
+                        Support the Mission
                     </button>
                     <button class="btn-minimal px-8 py-4 rounded-sm font-medium text-sm tracking-wide flex items-center gap-2">
                         <i data-lucide="play" class="w-4 h-4"></i>
-                        Watch Reel
+                        Watch "The Catch"
                     </button>
                 </div>
             </div>
@@ -279,27 +324,70 @@
             <!-- Stats -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-[#262626] stagger-children">
                 <div>
-                    <div class="font-display text-3xl font-medium mb-1">147</div>
-                    <div class="text-xs text-[#737373] uppercase tracking-wider">Investigations</div>
+                    <div class="font-display text-3xl font-medium mb-1 text-[#dc2626]">360K</div>
+                    <div class="text-xs text-[#737373] uppercase tracking-wider">YouTube Subscribers</div>
                 </div>
                 <div>
-                    <div class="font-display text-3xl font-medium mb-1 text-[#dc2626]">89</div>
-                    <div class="text-xs text-[#737373] uppercase tracking-wider">Predators Exposed</div>
+                    <div class="font-display text-3xl font-medium mb-1">43.1M</div>
+                    <div class="text-xs text-[#737373] uppercase tracking-wider">Total Views</div>
                 </div>
                 <div>
-                    <div class="font-display text-3xl font-medium mb-1">2.4k</div>
-                    <div class="text-xs text-[#737373] uppercase tracking-wider">Supporters</div>
+                    <div class="font-display text-3xl font-medium mb-1 text-[#dc2626]">473</div>
+                    <div class="text-xs text-[#737373] uppercase tracking-wider">Videos // Operations</div>
                 </div>
                 <div>
-                    <div class="font-display text-3xl font-medium mb-1">4.2M</div>
-                    <div class="text-xs text-[#737373] uppercase tracking-wider">Views Generated</div>
+                    <div class="font-display text-3xl font-medium mb-1">@PredTaskForce</div>
+                    <div class="text-xs text-[#737373] uppercase tracking-wider">Channel Handle</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Series Format -->
+    <section id="investigations" class="py-20 px-6 bg-[#0a0a0a]">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 fade-in">
+                <div>
+                    <span class="text-xs text-[#737373] uppercase tracking-widest mb-2 block">Cinematic Documentary Series</span>
+                    <h2 class="font-display text-3xl md:text-4xl font-medium">The Format</h2>
+                    <p class="text-[#737373] mt-2 max-w-xl">Professional, documentary-style predator catching following a structured approach from investigation to legal outcome.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
+                <div class="minimal-card rounded-sm p-8 group">
+                    <div class="accent-line mb-6 bg-[#dc2626]"></div>
+                    <div class="text-3xl mb-4">🎯</div>
+                    <h3 class="font-display text-xl font-medium mb-2">The Catch</h3>
+                    <p class="text-sm text-[#737373]">Confrontation footage. The moment of truth when predators are exposed in cinematic documentary style.</p>
+                </div>
+
+                <div class="minimal-card rounded-sm p-8 group">
+                    <div class="accent-line mb-6"></div>
+                    <div class="text-3xl mb-4">📞</div>
+                    <h3 class="font-display text-xl font-medium mb-2">The Call</h3>
+                    <p class="text-sm text-[#737373]">Phone sting operations. Decoy conversations that lead to exposure and evidence gathering.</p>
+                </div>
+
+                <div class="minimal-card rounded-sm p-8 group">
+                    <div class="accent-line mb-6"></div>
+                    <div class="text-3xl mb-4">📁</div>
+                    <h3 class="font-display text-xl font-medium mb-2">The Evidence</h3>
+                    <p class="text-sm text-[#737373]">Chat logs and proof. Documented communication via Linktree case links and archives.</p>
+                </div>
+
+                <div class="minimal-card rounded-sm p-8 group">
+                    <div class="accent-line mb-6"></div>
+                    <div class="text-3xl mb-4">⚖️</div>
+                    <h3 class="font-display text-xl font-medium mb-2">The Aftermath</h3>
+                    <p class="text-sm text-[#737373]">Legal outcomes. Justice served and case resolutions documented through the judicial system.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Membership Tiers -->
-    <section class="py-20 px-6 bg-[#0a0a0a]">
+    <section id="impact" class="py-20 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 fade-in">
                 <div>
@@ -328,7 +416,7 @@
                     <ul class="space-y-3 mb-8 text-sm text-[#a3a3a3]">
                         <li class="flex items-start gap-3">
                             <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
-                            <span>Exclusive case updates</span>
+                            <span>Linktree case file access</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
@@ -364,7 +452,7 @@
                         </li>
                         <li class="flex items-start gap-3">
                             <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
-                            <span>Raw investigation footage</span>
+                            <span>Raw "The Catch" footage</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
@@ -397,15 +485,15 @@
                         </li>
                         <li class="flex items-start gap-3">
                             <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
-                            <span>Monthly video calls</span>
+                            <span>Monthly video calls with Jake</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
-                            <span>Case input & voting</span>
+                            <span>Case input & targeting votes</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <i data-lucide="check" class="w-4 h-4 text-[#dc2626] mt-0.5 shrink-0"></i>
-                            <span>Merchandise & gear</span>
+                            <span>PTF merchandise & gear</span>
                         </li>
                     </ul>
 
@@ -418,11 +506,11 @@
     </section>
 
     <!-- Custom Support -->
-    <section class="py-20 px-6">
+    <section class="py-20 px-6 bg-[#0a0a0a]">
         <div class="max-w-2xl mx-auto text-center fade-in">
             <span class="text-xs text-[#737373] uppercase tracking-widest mb-2 block">Direct Support</span>
             <h2 class="font-display text-3xl font-medium mb-4">Make a one-time contribution</h2>
-            <p class="text-[#737373] mb-10">Fund specific investigations or equipment needs</p>
+            <p class="text-[#737373] mb-10">Fund specific investigations or equipment needs for Texas operations</p>
 
             <div class="minimal-card rounded-sm p-8 text-left">
                 <div class="flex gap-4 mb-8">
@@ -458,7 +546,7 @@
     </section>
 
     <!-- Features -->
-    <section class="py-20 px-6 bg-[#0a0a0a]">
+    <section class="py-20 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in">
                 <span class="text-xs text-[#737373] uppercase tracking-widest mb-2 block">What You Get</span>
@@ -468,30 +556,30 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-[#262626] stagger-children">
                 <div class="bg-[#0f0f0f] p-8 group hover:bg-[#1a1a1a] transition-colors">
                     <i data-lucide="video" class="w-6 h-6 text-[#dc2626] mb-4"></i>
-                    <h3 class="font-medium mb-2">Exclusive Content</h3>
-                    <p class="text-sm text-[#737373]">Unedited footage and case files not available publicly</p>
+                    <h3 class="font-medium mb-2">"The Catch" Footage</h3>
+                    <p class="text-sm text-[#737373]">Unedited confrontation videos not available publicly</p>
                 </div>
                 <div class="bg-[#0f0f0f] p-8 group hover:bg-[#1a1a1a] transition-colors">
                     <i data-lucide="message-circle" class="w-6 h-6 text-[#dc2626] mb-4"></i>
                     <h3 class="font-medium mb-2">Direct Access</h3>
-                    <p class="text-sm text-[#737373]">Private Discord and messaging with Jake</p>
+                    <p class="text-sm text-[#737373]">Private Discord and X community with Jake</p>
                 </div>
                 <div class="bg-[#0f0f0f] p-8 group hover:bg-[#1a1a1a] transition-colors">
                     <i data-lucide="eye" class="w-6 h-6 text-[#dc2626] mb-4"></i>
                     <h3 class="font-medium mb-2">Early Access</h3>
-                    <p class="text-sm text-[#737373]">Watch investigations before public release</p>
+                    <p class="text-sm text-[#737373]">Watch "The Aftermath" before public release</p>
                 </div>
                 <div class="bg-[#0f0f0f] p-8 group hover:bg-[#1a1a1a] transition-colors">
                     <i data-lucide="shield" class="w-6 h-6 text-[#dc2626] mb-4"></i>
                     <h3 class="font-medium mb-2">Impact</h3>
-                    <p class="text-sm text-[#737373]">Fund real investigations that protect communities</p>
+                    <p class="text-sm text-[#737373]">Fund real Texas investigations that protect communities</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section class="py-20 px-6">
+    <section class="py-20 px-6 bg-[#0a0a0a]">
         <div class="max-w-4xl mx-auto fade-in">
             <div class="text-center mb-12">
                 <span class="text-xs text-[#737373] uppercase tracking-widest mb-2 block">Community</span>
@@ -502,7 +590,7 @@
                 <div class="minimal-card rounded-sm p-8 md:flex gap-6 items-start">
                     <div class="w-12 h-12 rounded-full bg-[#262626] flex items-center justify-center font-display font-bold text-[#dc2626] shrink-0 mb-4 md:mb-0">S</div>
                     <div>
-                        <p class="text-lg mb-4 leading-relaxed">"The raw footage access gives you a completely different perspective on the work involved. It's intense, real, and important."</p>
+                        <p class="text-lg mb-4 leading-relaxed">"The raw 'The Catch' footage access gives you a completely different perspective on the work Jake does in Texas. It's intense, real, and important journalism."</p>
                         <div class="flex items-center gap-2 text-sm text-[#737373]">
                             <span class="text-white font-medium">Sarah M.</span>
                             <span>•</span>
@@ -514,7 +602,7 @@
                 <div class="minimal-card rounded-sm p-8 md:flex gap-6 items-start">
                     <div class="w-12 h-12 rounded-full bg-[#262626] flex items-center justify-center font-display font-bold text-[#dc2626] shrink-0 mb-4 md:mb-0">M</div>
                     <div>
-                        <p class="text-lg mb-4 leading-relaxed">"Being able to vote on which cases get priority makes me feel like I'm actually part of the solution, not just a viewer."</p>
+                        <p class="text-lg mb-4 leading-relaxed">"Being able to vote on which cases get priority through the X community makes me feel like I'm actually part of the solution, not just a viewer."</p>
                         <div class="flex items-center gap-2 text-sm text-[#737373]">
                             <span class="text-white font-medium">Mike R.</span>
                             <span>•</span>
@@ -527,7 +615,7 @@
     </section>
 
     <!-- FAQ -->
-    <section class="py-20 px-6 bg-[#0a0a0a]">
+    <section class="py-20 px-6">
         <div class="max-w-2xl mx-auto fade-in">
             <div class="text-center mb-12">
                 <span class="text-xs text-[#737373] uppercase tracking-widest mb-2 block">FAQ</span>
@@ -547,11 +635,21 @@
 
                 <div class="minimal-card rounded-sm overflow-hidden">
                     <button class="w-full px-6 py-5 text-left flex justify-between items-center faq-toggle group">
-                        <span class="font-medium group-hover:text-[#dc2626] transition-colors">How do I access the Discord?</span>
+                        <span class="font-medium group-hover:text-[#dc2626] transition-colors">Where can I access case evidence?</span>
                         <i data-lucide="plus" class="w-4 h-4 text-[#737373] faq-icon transition-transform"></i>
                     </button>
                     <div class="px-6 pb-5 text-[#737373] text-sm hidden faq-content">
-                        After joining, you'll receive an email with your exclusive invite link and authentication details.
+                        All case evidence and "The Evidence" chat logs are organized through our official Linktree at linktr.ee/predtaskforce. Available to all membership tiers.
+                    </div>
+                </div>
+
+                <div class="minimal-card rounded-sm overflow-hidden">
+                    <button class="w-full px-6 py-5 text-left flex justify-between items-center faq-toggle group">
+                        <span class="font-medium group-hover:text-[#dc2626] transition-colors">How do I join the Discord community?</span>
+                        <i data-lucide="plus" class="w-4 h-4 text-[#737373] faq-icon transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-5 text-[#737373] text-sm hidden faq-content">
+                        After joining, you'll receive an email with your exclusive Discord invite link and authentication details for the private server.
                     </div>
                 </div>
 
@@ -569,23 +667,29 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-[#262626] py-12 px-6">
+    <footer class="border-t border-[#262626] py-12 px-6 bg-[#0a0a0a]">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-3">
                 <div class="w-6 h-6 bg-[#dc2626] rounded-sm flex items-center justify-center">
-                    <span class="font-display font-bold text-white text-xs">JH</span>
+                    <span class="font-display font-bold text-white text-xs">PTF</span>
                 </div>
-                <span class="font-display font-medium text-sm">Jake Hockey</span>
+                <div>
+                    <span class="font-display font-medium text-sm block">Predator Task Force</span>
+                    <span class="text-[10px] text-[#525252]">Texas • Est. 2024</span>
+                </div>
             </div>
             
             <div class="flex gap-6 text-sm text-[#737373]">
+                <a href="https://www.youtube.com/@PredTaskForce" target="_blank" class="hover:text-white transition-colors">YouTube</a>
+                <a href="https://www.instagram.com/predtaskforce" target="_blank" class="hover:text-white transition-colors">Instagram</a>
+                <a href="https://x.com/predtaskforce" target="_blank" class="hover:text-white transition-colors">X (Twitter)</a>
+                <a href="https://linktr.ee/predtaskforce" target="_blank" class="hover:text-[#dc2626] transition-colors">Case Files</a>
                 <a href="#" class="hover:text-white transition-colors">Privacy</a>
                 <a href="#" class="hover:text-white transition-colors">Terms</a>
-                <a href="#" class="hover:text-white transition-colors">Contact</a>
             </div>
 
             <div class="text-xs text-[#525252]">
-                © 2026 All rights reserved.
+                © 2026 PTF • All rights reserved.
             </div>
         </div>
     </footer>
